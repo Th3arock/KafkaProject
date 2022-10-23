@@ -1,0 +1,26 @@
+server:
+  port: 8089
+
+spring:
+  servlet:
+    multipart:
+      max-request-size: 100MB
+      max-file-size: 100MB
+  kafka:
+    # MANUAL - acks are queued and the offsets committed in one operation when all the results from the last poll have been processed.
+    # MANUAL_IMMEDIATE - the offset is committed immediately (sync or async) as long as the ack is performed on the listener thread.
+    listener:
+      ack-mode: manual_immediate
+    consumer:
+      bootstrap-servers: 172.18.60.159:9092
+      key-Deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-Deserializer: consumer.deserialization.EmailDeserializer
+
+      #  What to do when there is no initial offset in Kafka or if the current offset does
+      #  not exist any more on the server (e.g. because that data has been deleted):
+      #  earliest: automatically reset the offset to the earliest offset
+      #  latest: automatically reset the offset to the latest offset
+      auto-offset-reset: earliest
+      group-id: myGroup
+      #  when ack-mode is manual-immediate the enable-auto-commit cannot be configured
+      enable-auto-commit: false
