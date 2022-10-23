@@ -9,7 +9,7 @@ spring:
 
   kafka:
     producer:
-      bootstrap-servers: 172.18.60.159:9092
+      bootstrap-servers: your_broker_address:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: producer.serialization.EmailSerializer
       properties:
