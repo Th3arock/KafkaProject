@@ -12,7 +12,7 @@ spring:
     listener:
       ack-mode: manual_immediate
     consumer:
-      bootstrap-servers: 172.18.60.159:9092
+      bootstrap-servers: your_broker_address:9092
       key-Deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-Deserializer: consumer.deserialization.EmailDeserializer
 
