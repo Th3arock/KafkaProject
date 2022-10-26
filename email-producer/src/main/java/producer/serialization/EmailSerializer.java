@@ -18,25 +18,32 @@ import java.io.IOException;
 public class EmailSerializer implements Serializer<Email> {
     @Override
     public byte[] serialize(String s, Email email) {
-
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        DataOutputStream dos = new DataOutputStream(bos);
-
         try {
-            byte[] nameByte = email.getName().getBytes();
-            byte[] fileByte = email.getFile().getBytes();
-            byte[] originalFileNameByte = email.getFile().getOriginalFilename().getBytes();
-
-            dos.writeInt(nameByte.length);
-            dos.write(nameByte);
-            dos.writeInt(fileByte.length);
-            dos.write(fileByte);
-            dos.writeInt(originalFileNameByte.length);
-            dos.write(originalFileNameByte);
-
-            return bos.toByteArray();
+            return castToByteOneByOne(email);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+    }
+
+    public byte[] castToByteOneByOne(Email email) throws IOException {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(bos);
+
+        byte[] nameByte = email.getName().getBytes();
+        byte[] contentByte = email.getContent().getBytes();
+        byte[] fileByte = email.getAttachment().getBytes();
+        byte[] originalFileNameByte = email.getAttachment().getOriginalFilename().getBytes();
+
+        dos.writeInt(nameByte.length);
+        dos.write(nameByte);
+        dos.writeInt(contentByte.length);
+        dos.write(contentByte);
+        dos.writeInt(fileByte.length);
+        dos.write(fileByte);
+        dos.writeInt(originalFileNameByte.length);
+        dos.write(originalFileNameByte);
+
+        return bos.toByteArray();
     }
 }

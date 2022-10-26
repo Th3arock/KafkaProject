@@ -12,6 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 public class Email {
     private String name;
-    private MultipartFile file;
-
+    private String content;
+    private MultipartFile attachment;
 }

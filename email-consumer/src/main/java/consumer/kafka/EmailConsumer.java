@@ -16,16 +16,18 @@ public class EmailConsumer {
 
 
     @KafkaListener(topics = "studentsEmail")
-    public void consumeFile(Email email , Acknowledgment acknowledgment) throws IOException {
-        byte[] byteArr = email.getFile().getBytes();
-        System.out.println(email.getFile().getOriginalFilename());
-        System.out.println(email.getName());
-        Path path = Paths.get(uploadFolderPath, email.getFile().getOriginalFilename());
+    public void consumeFile(Email email, Acknowledgment acknowledgment) throws IOException {
+        byte[] byteArr = email.getAttachment().getBytes();
+        System.out.println("Receiver : " + email.getName());
+        System.out.println("Attachment file : " + email.getAttachment().getOriginalFilename());
+        System.out.println("Content of message : " + email.getContent());
+
+        Path path = Paths.get(uploadFolderPath, email.getAttachment().getOriginalFilename());
         try {
             //saving the file for testing
             Files.write(path, byteArr);
             // This method called when the consumer consume the offset successfully ,
-            // and after that manual-immediate will commit the offset
+            // and after that (manual-immediate .yml file) will commit the offset
             acknowledgment.acknowledge();
         } catch (IOException exception) {
             exception.getMessage();
