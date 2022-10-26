@@ -12,15 +12,9 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/v1")
-public class SendEmail {
+public class EmailController {
     @Autowired
     private EmailProducer emailProducer;
-
-//    @PostMapping("/upload/multipartfile")
-//    public String uploadMultipartFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
-//        kafkaFileProducer.uploadMultipartFile(multipartFile);
-//        return "uploaded successfully";
-//    }
 
     @PostMapping("/upload/sendEmail")
     public String sendEmail(@ModelAttribute Email email) throws IOException {
