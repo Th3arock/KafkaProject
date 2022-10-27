@@ -2,17 +2,36 @@ server:
   port: 8090
 
 spring:
+  jpa:
+    database: postgresql
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: 123456
+    url: jdbc:postgresql://localhost:5432/email
   servlet:
     multipart:
       max-request-size: 100MB
       max-file-size: 100MB
-
   kafka:
     producer:
       bootstrap-servers: your_broker_address:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: producer.serialization.EmailSerializer
       properties:
+        # only one copy of a given message will be written to the topic; if false, duplicate messages are possible.
+        # There is a limitation for using this feature and that is , acks should be all to guarantee duplication.
+        enable:
+          idempotence: true
         buffer:
           memory: 90000000
         max:
@@ -22,5 +41,4 @@ spring:
       #  ensure that the message has been successfully committed to that broker.
       #  The config acks is the number of acknowledgments the producer needs to
       #  receive before considering a successful commit.
-      acks: 1
-
+      acks: all
