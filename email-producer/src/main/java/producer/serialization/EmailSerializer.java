@@ -12,9 +12,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 @Slf4j
-@Data
-@Getter
-@Setter
 public class EmailSerializer implements Serializer<Email> {
     @Override
     public byte[] serialize(String s, Email email) {
