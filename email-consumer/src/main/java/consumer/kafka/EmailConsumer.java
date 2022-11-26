@@ -26,7 +26,7 @@ public class EmailConsumer {
         try {
             //saving the file for testing
             Files.write(path, byteArr);
-            // This method called when the consumer consume the offset successfully ,
+            // This method is called when the consumer consume the offset successfully ,
             // and after that (manual-immediate .yml file) will commit the offset
             acknowledgment.acknowledge();
         } catch (IOException exception) {
