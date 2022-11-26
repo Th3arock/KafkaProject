@@ -12,9 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.nio.ByteBuffer;
 
 @Slf4j
-@Data
-@Getter
-@Setter
 public class EmailDeserializer implements Deserializer<Email> {
 
     private String encoding = "UTF8";
