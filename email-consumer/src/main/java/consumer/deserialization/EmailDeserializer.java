@@ -2,9 +2,6 @@ package consumer.deserialization;
 
 import consumer.cast.DecodedMultipartFile;
 import consumer.model.Email;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,7 +11,7 @@ import java.nio.ByteBuffer;
 @Slf4j
 public class EmailDeserializer implements Deserializer<Email> {
 
-    private String encoding = "UTF8";
+    private final static String ENCODING = "UTF8";
 
     @Override
     public Email deserialize(String s, byte[] data) {
@@ -49,9 +46,9 @@ public class EmailDeserializer implements Deserializer<Email> {
         buffer.get(originalFileNameByte);
 
         try {
-            String deserializedName = new String(nameBytes, encoding);
-            String deserializedContent = new String(contentByte, encoding);
-            String deserializedOriginalFileName = new String(originalFileNameByte, encoding);
+            String deserializedName = new String(nameBytes, ENCODING);
+            String deserializedContent = new String(contentByte, ENCODING);
+            String deserializedOriginalFileName = new String(originalFileNameByte, ENCODING);
             MultipartFile attachment = new DecodedMultipartFile(attachmentByte, deserializedOriginalFileName);
 
             return new Email(deserializedName, deserializedContent, attachment);
