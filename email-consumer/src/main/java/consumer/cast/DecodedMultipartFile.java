@@ -10,11 +10,11 @@ import java.io.InputStream;
 import java.nio.file.Path;
 
 public class DecodedMultipartFile implements MultipartFile {
-    private final byte [] imgContent;
+    private final byte [] attachmentByte;
     private final String originalFileName;
 
-    public DecodedMultipartFile(byte[] imgContent , String originalFileName) {
-        this.imgContent = imgContent;
+    public DecodedMultipartFile(byte[] attachmentByte, String originalFileName) {
+        this.attachmentByte = attachmentByte;
         this.originalFileName = originalFileName;
     }
 
@@ -45,7 +45,7 @@ public class DecodedMultipartFile implements MultipartFile {
 
     @Override
     public byte[] getBytes() throws IOException {
-        return imgContent;
+        return attachmentByte;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class DecodedMultipartFile implements MultipartFile {
 
     @Override
     public void transferTo(File dest) throws IOException, IllegalStateException {
-        new FileOutputStream(dest).write(imgContent);
+        new FileOutputStream(dest).write(attachmentByte);
 
     }
 
