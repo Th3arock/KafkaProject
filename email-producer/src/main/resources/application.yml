@@ -26,7 +26,7 @@ spring:
       max-file-size: 100MB
   kafka:
     producer:
-      bootstrap-servers: your_broker_address:9092:9092
+      bootstrap-servers: your_broker_address:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: producer.serialization.EmailSerializer
       properties:
