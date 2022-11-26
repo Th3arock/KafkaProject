@@ -13,18 +13,20 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    username: postgres
-    password: 123456
-    url: jdbc:postgresql://localhost:5432/email
+
+# If you want to use a database you can config it here
+#  datasource:
+#    driver-class-name: org.postgresql.Driver
+#    username: postgres
+#    password: 123456
+#    url: jdbc:postgresql://localhost:5432/email
   servlet:
     multipart:
       max-request-size: 100MB
       max-file-size: 100MB
   kafka:
     producer:
-      bootstrap-servers: your_broker_address:9092
+      bootstrap-servers: your_broker_address:9092:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: producer.serialization.EmailSerializer
       properties:
