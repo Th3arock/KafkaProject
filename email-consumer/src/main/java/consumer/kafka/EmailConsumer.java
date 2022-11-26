@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 
 @Service
 public class EmailConsumer {
-    private static final String uploadFolderPath = "C:/Users/e.gholami/Desktop/consume from kafka";
+    private static final String UPLOAD_FOLDER_PATH = "C:/Users/e.gholami/Desktop/consume from kafka";
 
 
     @KafkaListener(topics = "studentsEmail")
@@ -22,7 +22,7 @@ public class EmailConsumer {
         System.out.println("Attachment file : " + email.getAttachment().getOriginalFilename());
         System.out.println("Content of message : " + email.getContent());
 
-        Path path = Paths.get(uploadFolderPath, email.getAttachment().getOriginalFilename());
+        Path path = Paths.get(UPLOAD_FOLDER_PATH, email.getAttachment().getOriginalFilename());
         try {
             //saving the file for testing
             Files.write(path, byteArr);
