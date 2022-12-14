@@ -67,6 +67,8 @@
 				</configuration>
 			</plugin>
 		</plugins>
+
+		<finalName>kafka-projects</finalName>
 	</build>
 
 </project>

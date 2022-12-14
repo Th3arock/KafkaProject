@@ -72,6 +72,10 @@
             <version>2.7.5</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-streams</artifactId>
+        </dependency>
     </dependencies>
 
     <properties>
