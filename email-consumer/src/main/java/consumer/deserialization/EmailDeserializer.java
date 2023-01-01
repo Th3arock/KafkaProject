@@ -12,6 +12,10 @@ import java.nio.ByteBuffer;
 public class EmailDeserializer implements Deserializer<Email> {
 
     private final static String ENCODING = "UTF8";
+    private byte[] nameBytes;
+    private byte[] contentByte;
+    private byte[] attachmentByte;
+    private byte[] originalFileNameByte;
 
     @Override
     public Email deserialize(String s, byte[] data) {
@@ -19,32 +23,58 @@ public class EmailDeserializer implements Deserializer<Email> {
     }
 
     public Email castToModelClassOneByOne(byte[] data) {
-        int nameSize;
-        int contentSize;
-        int attachmentSize;
-        int originalFileNameSize;
 
-        if (data == null)
-            return null;
+        checkIfNull(data);
 
         ByteBuffer buffer = ByteBuffer.wrap(data);
 
+        getName(buffer);
+
+        getContent(buffer);
+
+        getAttachment(buffer);
+
+        getOriginalFileName(buffer);
+
+        return recreateModelContentsFromByte();
+    }
+
+
+    private boolean checkIfNull(byte[] data) {
+        return data == null;
+    }
+
+    private void getName(ByteBuffer buffer) {
+        int nameSize;
         nameSize = buffer.getInt();
-        byte[] nameBytes = new byte[nameSize];
+        nameBytes = new byte[nameSize];
         buffer.get(nameBytes);
+    }
 
+    private void getContent(ByteBuffer buffer) {
+        int contentSize;
         contentSize = buffer.getInt();
-        byte[] contentByte = new byte[contentSize];
+        contentByte = new byte[contentSize];
         buffer.get(contentByte);
+    }
 
+    private void getAttachment(ByteBuffer buffer) {
+        int attachmentSize;
         attachmentSize = buffer.getInt();
-        byte[] attachmentByte = new byte[attachmentSize];
+        attachmentByte = new byte[attachmentSize];
         buffer.get(attachmentByte);
+    }
 
+
+    private void getOriginalFileName(ByteBuffer buffer) {
+        int originalFileNameSize;
         originalFileNameSize = buffer.getInt();
-        byte[] originalFileNameByte = new byte[originalFileNameSize];
+        originalFileNameByte = new byte[originalFileNameSize];
         buffer.get(originalFileNameByte);
+    }
 
+
+    private Email recreateModelContentsFromByte() {
         try {
             String deserializedName = new String(nameBytes, ENCODING);
             String deserializedContent = new String(contentByte, ENCODING);
