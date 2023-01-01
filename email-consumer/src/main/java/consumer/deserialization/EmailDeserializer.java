@@ -24,7 +24,8 @@ public class EmailDeserializer implements Deserializer<Email> {
 
     public Email castToModelClassOneByOne(byte[] data) {
 
-        checkIfNull(data);
+        if (data == null)
+            return null;
 
         ByteBuffer buffer = ByteBuffer.wrap(data);
 
@@ -39,10 +40,6 @@ public class EmailDeserializer implements Deserializer<Email> {
         return recreateModelContentsFromByte();
     }
 
-
-    private boolean checkIfNull(byte[] data) {
-        return data == null;
-    }
 
     private void getName(ByteBuffer buffer) {
         int nameSize;
